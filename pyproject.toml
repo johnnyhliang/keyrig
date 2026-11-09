@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keyrig"
+version = "0.1.0"
+description = "Terminal live rig for USB MIDI keyboards: layers, splits, drums and presets on an in-process FluidSynth."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "textual>=8.0",
+    "mido>=1.3",
+    "python-rtmidi>=1.5",
+    "pyfluidsynth>=1.3.4",
+    "tomli-w>=1.0",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+keyrig = "keyrig.__main__:main"
+
+[tool.setuptools]
+packages = ["keyrig"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

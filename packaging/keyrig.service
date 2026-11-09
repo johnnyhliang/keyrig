@@ -1,0 +1,14 @@
+[Unit]
+Description=keyrig headless MIDI instrument
+After=pipewire.service wireplumber.service
+Wants=pipewire.service
+
+[Service]
+Type=simple
+# Change this path if the project lives somewhere else.
+ExecStart=%h/Documents/soundchain/.venv/bin/keyrig --headless
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
