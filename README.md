@@ -4,6 +4,8 @@ A terminal instrument rig for a USB MIDI keyboard. It needs no DAW: FluidSynth r
 process, with up to 4 key layers, a drum layer, presets, and knob learn. Runs as a TUI on Fedora
 (PipeWire), or headless under systemd, for example on a Raspberry Pi 4.
 
+![keyrig playing a chord: layer grid, key strip, drum pads, level meters and spectrum with overtone markers](docs/screenshot.png)
+
 ## Install (Fedora)
 
 ```sh
@@ -160,6 +162,11 @@ The UI shows three numbers:
 
 These do not include the audio interface's own converter and USB delay.
 
+MIDI->synth shows the latest note and the worst since launch. The TUI shares Python with the note
+path, so keyrig gives notes priority over drawing and keeps Python's memory cleanups short. A note can
+still take a few milliseconds while the screen draws; headless mode has no
+screen to wait for.
+
 Set these in `config.toml`, then restart:
 
 | `period_size` | Latency at 48 kHz (PipeWire) | Use |
@@ -220,4 +227,5 @@ aconnect -l                      # look for keyrig-fake
 | `keyrig/layers.py` | Layer model and note routing |
 | `keyrig/presets.py` | Presets, mappings, starter presets, TOML storage |
 | `keyrig/rig.py` | Connects the above; used by both the TUI and headless mode |
+| `keyrig/realtime.py` | Keeps Python's thread switching and memory cleanup from delaying notes |
 | `keyrig/ui.py` | Textual interface |

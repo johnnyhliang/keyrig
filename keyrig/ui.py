@@ -40,10 +40,12 @@ from .presets import (
     T_ROTARY_SPEED,
     target_label,
 )
+from .realtime import settle_garbage_collector
 from .rig import Rig
 from .synth_engine import NODE_NAME, list_audio_devices
 
 REFRESH_HZ = 20
+GC_SETTLE_SECONDS = 2.0
 COMPACT_BELOW_ROWS = 30
 ACTIVITY_SECONDS = 0.15
 
@@ -688,6 +690,7 @@ class MainScreen(Screen):
         self.meter.start()
         self.tick()
         self.set_interval(1 / REFRESH_HZ, self.tick)
+        self.set_timer(GC_SETTLE_SECONDS, settle_garbage_collector)  # after the first full draw
 
     def on_unmount(self) -> None:
         self.meter.stop()

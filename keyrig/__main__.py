@@ -117,10 +117,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.headless:
         return run_headless(rig)
 
+    from .realtime import prepare_for_tui
     from .ui import KeyrigApp
 
     print("keyrig: loading SoundFonts…", flush=True)
     isolate_stderr(config.log_path)
+    prepare_for_tui()
     rig.start()
     app = KeyrigApp(rig)
     try:
